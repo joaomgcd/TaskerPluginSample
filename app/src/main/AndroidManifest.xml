@@ -1,0 +1,102 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.joaomgcd.taskerpluginsample">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true">
+
+        <activity android:name=".ActivityMain">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".tasker.helloworld.HelloWorldActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Hello World">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".tasker.dynamicinput.DynamicInputActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Dynamic Input">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".tasker.togglecondition.ToggleConditionActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Toggle Condition">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.joaomgcd.taskerpluginsample.tasker.gettime.ActivityConfigGetTime"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Time">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".tasker.getip.ActivityConfigGetIP"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Public IP">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".tasker.getartists.GetArtistsActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Artists Info">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.joaomgcd.taskerpluginsample.tasker.gottime.ActivityConfigGotTime"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Got Time">
+            <intent-filter>
+                <action android:name="net.dinglisch.android.tasker.ACTION_EDIT_EVENT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".tasker.playstatechanged.PlayStateChangedActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Play State Changed">
+            <intent-filter>
+                <action android:name="net.dinglisch.android.tasker.ACTION_EDIT_EVENT" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name="com.joaomgcd.taskerpluginsample.tasker.togglingcondition.ActivityConfigTogglingCondition"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Toggling">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_CONDITION" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

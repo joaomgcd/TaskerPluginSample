@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Time Format" />
+
+    <EditText
+        android:id="@+id/editTextFormat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Time Format"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Number Of Times" />
+
+    <EditText
+        android:id="@+id/editTextTimes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Number Of Times"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editTextVariable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Optional name of output variable" />
+
+    <CheckBox
+        android:id="@+id/checkBoxGetSeconds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Should get seconds" />
+</LinearLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Play State to Trigger On" />
+
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/radioGroupPlayState" android:orientation="vertical">
+        <RadioButton
+            android:id="@+id/radioButtonPlaying"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Playing" />
+
+        <RadioButton
+            android:id="@+id/radioButtonStopped"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Paused/Stopped" />
+    </RadioGroup>
+</LinearLayout>

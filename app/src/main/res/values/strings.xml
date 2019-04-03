@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Tasker Plugin Sample</string>
+    <string name="formatted_time">Formatted Time</string>
+    <string name="formatted_time_description">The time this action was created formatted with your chosen format</string>
+    <string name="format">Format</string>
+    <string name="times">Times</string>
+    <string name="variable">Variable</string>
+    <string name="min_api_example">Min Api Example</string>
+    <string name="min_api_example_description">This variable will only show up for API levels 27 and above</string>
+    <string name="time_created_epoch">Time Created Since Epoch</string>
+    <string name="separator">Separator</string>
+    <string name="options">Options</string>
+    <string name="split">Split</string>
+    <string name="ip">Your IP</string>
+    <string name="ip_description">Your public IP at the time of execution</string>
+    <string name="splitip">Split IP</string>
+    <string name="splitip_description">Your IP but split in parts</string>
+    <string name="time">Current Epoch Time</string>
+    <string name="time_description">Number of milliseconds since epoch</string>
+    <string name="hours">Hours</string>
+    <string name="hours_description">Current Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
+    <string name="minutes_description">Current Minutes</string>
+    <string name="seconds_description">Current Seconds</string>
+    <string name="get_seconds">Get Seconds</string>
+    <string name="playing_label">Playing State</string>
+    <string name="playing_html_label">Whether the player is playing right now or not</string>
+
+    <string name="artist">artist</string>
+    <string name="artist_label">Artist</string>
+    <string name="artist_html_label">Artist for the current song</string>
+
+    <string name="song">song</string>
+    <string name="song_label">Song</string>
+    <string name="song_html_label">Name of the song </string>
+
+    <string name="duration">duration</string>
+    <string name="duration_label">Duration</string>
+    <string name="duration_html_label">Duration in seconds</string>
+
+    <string name="songs">songs</string>
+    <string name="songs_label">Songs</string>
+    <string name="songs_html_label">Name of songs this artist has</string>
+
+    <string name="album">album</string>
+    <string name="album_label">Album</string>
+    <string name="album_html_label">Best album for this artist</string>
+    <string name="play_mode">Play Mode</string>
+    <string name="playing">Playing</string>
+    <string name="stopped_paused">Stopped/Paused</string>
+</resources>

@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+
+apply plugin: 'com.novoda.bintray-release'
+publish {
+    userOrg = 'joaomgcd'
+    groupId = 'com.joaomgcd'
+    artifactId = 'taskerpluginlibrary'
+    publishVersion = '0.1'
+    desc = 'Easily create Tasker plugins for your app!'
+    website = 'https://github.com/joaomgcd'
+}
+tasks.withType(Javadoc).all {
+    enabled = false
+}
+ext {
+    bintrayRepo = 'Joaoapps'
+    bintrayName = 'joaomgcd'
+}
+android {
+    compileSdkVersion 27
+
+
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 3
+        versionName "0.0.3"
+
+
+    }
+
+    buildTypes {
+        release {
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+repositories {
+    mavenCentral()
+}

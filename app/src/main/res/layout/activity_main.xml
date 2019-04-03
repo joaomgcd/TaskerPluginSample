@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check out the actions and conditions in Tasker" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Trigger Conditions in Tasker"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Toggle Condition"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/buttonToggleCondition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Toggle Condition" />
+
+    <TextView
+        android:id="@+id/textViewChangePlayState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Change Play State"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editTextArtist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Artist Name"
+        android:inputType="textPersonName"
+        android:text="The Beatles" />
+
+    <EditText
+        android:id="@+id/editTextSong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Song Name"
+        android:inputType="textPersonName"
+        android:text="Yellow Submarine" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioPlaying"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/playing" />
+
+        <RadioButton
+            android:id="@+id/radioStopped"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/stopped_paused" />
+    </RadioGroup>
+
+</LinearLayout>

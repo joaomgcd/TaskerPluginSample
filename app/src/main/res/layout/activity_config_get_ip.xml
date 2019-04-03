@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Separator" />
+
+    <EditText
+        android:id="@+id/editTextSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Separator" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Split" />
+
+    <CheckBox
+        android:id="@+id/checkboxSplit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Should Split IP Parts" />
+
+</LinearLayout>
