@@ -7,7 +7,7 @@ publish {
     userOrg = 'joaomgcd'
     groupId = 'com.joaomgcd'
     artifactId = 'taskerpluginlibrary'
-    publishVersion = '0.1'
+    publishVersion = '0.2'
     desc = 'Easily create Tasker plugins for your app!'
     website = 'https://github.com/joaomgcd'
 }
