@@ -9,7 +9,7 @@ publish {
     artifactId = 'taskerpluginlibrary'
     publishVersion = '0.2'
     desc = 'Easily create Tasker plugins for your app!'
-    website = 'https://github.com/joaomgcd'
+    website = 'https://github.com/joaomgcd/TaskerPluginSample'
 }
 tasks.withType(Javadoc).all {
     enabled = false
