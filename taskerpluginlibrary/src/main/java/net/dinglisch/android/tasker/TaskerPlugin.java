@@ -650,6 +650,8 @@ public class TaskerPlugin {
                         okFlag = true;
                     } catch (URISyntaxException e) {
                         Log.w(TAG, errorPrefix + "bad URI: " + completionIntentUri);
+                    } catch (IllegalStateException e) {
+                        Log.w(TAG, errorPrefix + "host was not in foreground: " + completionIntentUri,e);
                     }
                 }
             }
