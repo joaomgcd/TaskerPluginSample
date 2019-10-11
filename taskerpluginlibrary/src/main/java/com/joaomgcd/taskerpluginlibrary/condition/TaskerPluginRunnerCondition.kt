@@ -8,7 +8,6 @@ import android.content.Intent
 import com.joaomgcd.taskerpluginlibrary.NoEmptyConstructorException
 import com.joaomgcd.taskerpluginlibrary.TaskerPluginConstants
 import com.joaomgcd.taskerpluginlibrary.extensions.getTaskerInput
-import com.joaomgcd.taskerpluginlibrary.extensions.startServiceDependingOnTargetApi
 import com.joaomgcd.taskerpluginlibrary.input.TaskerInput
 import com.joaomgcd.taskerpluginlibrary.input.TaskerInputInfos
 import com.joaomgcd.taskerpluginlibrary.output.runner.TaskerOutputForRunner
@@ -19,14 +18,14 @@ import com.joaomgcd.taskerpluginlibrary.runner.TaskerPluginRunner
 import net.dinglisch.android.tasker.TaskerPlugin
 
 
-
-
-abstract class TaskerPluginRunnerConditionEvent<TInput : Any, TOutput : Any, TUpdate : Any>() : TaskerPluginRunnerCondition<TInput, TOutput,TUpdate>() {
+abstract class TaskerPluginRunnerConditionEvent<TInput : Any, TOutput : Any, TUpdate : Any>() : TaskerPluginRunnerCondition<TInput, TOutput, TUpdate>() {
     override val isEvent = true
 }
-abstract class TaskerPluginRunnerConditionState<TInput : Any, TOutput : Any>() : TaskerPluginRunnerCondition<TInput, TOutput,Unit>() {
+
+abstract class TaskerPluginRunnerConditionState<TInput : Any, TOutput : Any>() : TaskerPluginRunnerCondition<TInput, TOutput, Unit>() {
     override val isEvent = false
 }
+
 abstract class TaskerPluginRunnerCondition<TInput : Any, TOutput : Any, TUpdate : Any>() : TaskerPluginRunner<TInput, TOutput>() {
     protected abstract val isEvent: Boolean
     private fun TaskerPluginResultCondition<TOutput>.getConditionResult(hasStartedForeground: Boolean, input: TaskerInput<TInput>? = null): TaskerPluginConditionResult {
@@ -89,7 +88,11 @@ abstract class TaskerPluginRunnerCondition<TInput : Any, TOutput : Any, TUpdate 
                 TaskerPlugin.Event.addPassThroughMessageID(this)
                 update.getUpdateBundle(context)?.let { TaskerPlugin.Event.addPassThroughData(this, it) }
             }
-            val packagesAlreadyHandled = requestQueryThroughServicesAndGetSuccessPackages(context, intentRequest)
+            val packagesAlreadyHandled = try {
+                requestQueryThroughServicesAndGetSuccessPackages(context, intentRequest)
+            } catch (ex: Exception) {
+                listOf<String>()
+            }
             requestQueryThroughBroadcasts(context, intentRequest, packagesAlreadyHandled)
 
         }
