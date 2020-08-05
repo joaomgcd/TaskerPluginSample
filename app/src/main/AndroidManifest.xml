@@ -87,6 +87,31 @@
                 <action android:name="net.dinglisch.android.tasker.ACTION_EDIT_EVENT" />
             </intent-filter>
         </activity>
+        <activity android:name=".tasker.basic.ActivityConfigBasicAction"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Basic Action">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".tasker.basic.ActivityConfigBasicEvent"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Basic Event">
+            <intent-filter>
+                <action android:name="net.dinglisch.android.tasker.ACTION_EDIT_EVENT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".tasker.basic.ActivityConfigBasicState"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Basic State">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_CONDITION" />
+            </intent-filter>
+        </activity>
 
 
         <activity

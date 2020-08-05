@@ -15,3 +15,7 @@ interface TaskerPluginConfig<TInput : Any> {
     val inputForTasker: TaskerInput<TInput>
 }
 
+interface TaskerPluginConfigNoInput : TaskerPluginConfig<Unit>{
+    override fun assignFromInput(input: TaskerInput<Unit>) {}
+    override val inputForTasker get() = TaskerInput(Unit)
+}
