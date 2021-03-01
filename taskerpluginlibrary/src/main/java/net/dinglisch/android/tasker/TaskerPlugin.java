@@ -465,6 +465,7 @@ public class TaskerPlugin {
         public final static String EXTRA_CALL_SERVICE_PACKAGE = TaskerIntent.TASKER_PACKAGE + ".EXTRA_CALL_SERVICE_PACKAGE";
         public final static String EXTRA_CALL_SERVICE = TaskerIntent.TASKER_PACKAGE + ".EXTRA_CALL_SERVICE";
         public final static String EXTRA_CALL_SERVICE_FOREGROUND = TaskerIntent.TASKER_PACKAGE + ".EXTRA_CALL_SERVICE_FOREGROUND";
+        public final static String EXTRA_RESULT_CALL_URI = BASE_KEY + ".EXTRA_RESULT_CALL_URI";
         /**
          * @see #setVariableReplaceKeys(Bundle, String[])
          */
@@ -592,20 +593,22 @@ public class TaskerPlugin {
             return hostSupports(extrasFromHost, EXTRA_HOST_CAPABILITY_SETTING_RETURN_VARIABLES);
         }
 
+        public static boolean signalFinish( Context context, Intent originalFireIntent, int resultCode, Bundle vars ) {
+            return signalFinish(context, originalFireIntent, resultCode, vars,null);
+        }
         /**
          * Used by: plugin FireReceiver
-         * <p>
+         *
          * Tell the host that the plugin has finished execution.
-         * <p>
+         *
          * This should only be used if RESULT_CODE_PENDING was returned by FireReceiver.onReceive().
          *
          * @param originalFireIntent the intent received from the host (via onReceive())
-         * @param resultCode         level of success in performing the settings
-         * @param vars               any variables that the plugin wants to set in the host
+         * @param resultCode level of success in performing the settings
+         * @param vars any variables that the plugin wants to set in the host
          * @see #hostSupportsSynchronousExecution(Bundle)
          */
-        @TargetApi(Build.VERSION_CODES.O)
-        public static boolean signalFinish(Context context, Intent originalFireIntent, int resultCode, Bundle vars) {
+        public static boolean signalFinish( Context context, Intent originalFireIntent, int resultCode, Bundle vars, Uri callbackUri ) {
 
             String errorPrefix = "signalFinish: ";
 
@@ -633,6 +636,9 @@ public class TaskerPlugin {
                         if (vars != null)
                             completionIntent.putExtra(EXTRA_VARIABLES_BUNDLE, vars);
 
+                        if(callbackUri != null){
+                            completionIntent.putExtra(EXTRA_RESULT_CALL_URI, callbackUri);
+                        }
                         String callServicePackage = (String) getExtraValueSafe(completionIntent, Setting.EXTRA_CALL_SERVICE_PACKAGE, String.class, "signalFinish");
                         String callService = (String) getExtraValueSafe(completionIntent, Setting.EXTRA_CALL_SERVICE, String.class, "signalFinish");
                         Boolean foreground = (Boolean) getExtraValueSafe(completionIntent, Setting.EXTRA_CALL_SERVICE_FOREGROUND, Boolean.class, "signalFinish");

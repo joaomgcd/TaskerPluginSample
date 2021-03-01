@@ -15,12 +15,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ActivityLaunchedFromPlugin">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="fromplugin"
+                    android:scheme="taskerpluginsample" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".tasker.helloworld.HelloWorldActivity"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="Hello World">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".tasker.launchactivity.LaunchActivityActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Launch Activity">
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
             </intent-filter>
