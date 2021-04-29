@@ -3,6 +3,9 @@ package com.joaomgcd.taskerpluginsample
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.M
 import android.os.Handler
 import android.os.Looper
 import android.widget.ArrayAdapter
@@ -36,3 +39,6 @@ fun Activity.alert(title: String, message: String) {
 }
 
 val RadioGroup.checkedRadioButton get() = this.findViewById<RadioButton>(checkedRadioButtonId)
+
+val Context.canDrawOverlays get() = if (SDK_INT < M) true else android.provider.Settings.canDrawOverlays(this)
+

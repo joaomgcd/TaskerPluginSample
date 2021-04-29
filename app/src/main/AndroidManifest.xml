@@ -2,6 +2,8 @@
     package="com.joaomgcd.taskerpluginsample">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!--Necessary to launch activities from background-->
+
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,6 +29,7 @@
                     android:scheme="taskerpluginsample" />
             </intent-filter>
         </activity>
+        <activity android:name=".tasker.backgroundwork.ActivityBackgroundWork" />
 
         <activity
             android:name=".tasker.helloworld.HelloWorldActivity"
@@ -47,6 +50,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".tasker.backgroundwork.BackgroundWorkActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Background Work">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".tasker.dynamicinput.DynamicInputActivity"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
@@ -56,7 +68,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".tasker.togglecondition.ToggleConditionActivity"
+        <activity
+            android:name=".tasker.togglecondition.ToggleConditionActivity"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="Toggle Condition">
@@ -82,7 +95,8 @@
                 <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
             </intent-filter>
         </activity>
-        <activity android:name=".tasker.getartists.GetArtistsActivity"
+        <activity
+            android:name=".tasker.getartists.GetArtistsActivity"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="Artists Info">
@@ -100,7 +114,8 @@
                 <action android:name="net.dinglisch.android.tasker.ACTION_EDIT_EVENT" />
             </intent-filter>
         </activity>
-        <activity android:name=".tasker.playstatechanged.PlayStateChangedActivity"
+        <activity
+            android:name=".tasker.playstatechanged.PlayStateChangedActivity"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="Play State Changed">
@@ -108,7 +123,8 @@
                 <action android:name="net.dinglisch.android.tasker.ACTION_EDIT_EVENT" />
             </intent-filter>
         </activity>
-        <activity android:name=".tasker.basic.ActivityConfigBasicAction"
+        <activity
+            android:name=".tasker.basic.ActivityConfigBasicAction"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="Basic Action">
@@ -116,7 +132,8 @@
                 <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
             </intent-filter>
         </activity>
-        <activity android:name=".tasker.basic.ActivityConfigBasicEvent"
+        <activity
+            android:name=".tasker.basic.ActivityConfigBasicEvent"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="Basic Event">

@@ -49,4 +49,8 @@
     <string name="play_mode">Play Mode</string>
     <string name="playing">Playing</string>
     <string name="stopped_paused">Stopped/Paused</string>
+    <string name="time_taken">Time Taken</string>
+    <string name="time_taken_description">The time it took for the background work to complete in millis</string>
+    <string name="result">Result</string>
+    <string name="result_description">Text user input in the dialog</string>
 </resources>
