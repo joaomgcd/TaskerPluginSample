@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.CompoundButton
 import com.joaomgcd.taskerpluginlibrary.extensions.requestQuery
+import com.joaomgcd.taskerpluginsample.tasker.basic.triggerBasicTaskerEvent
 import com.joaomgcd.taskerpluginsample.tasker.playstatechanged.PlayState
 import com.joaomgcd.taskerpluginsample.tasker.playstatechanged.PlayStateChangedActivity
 import com.joaomgcd.taskerpluginsample.tasker.togglingcondition.TogglingConditionRunner
@@ -15,6 +16,7 @@ class ActivityMain : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        buttonTriggerBasicEvent.setOnClickListener { triggerBasicTaskerEvent() }
         setToggleButtonText()
         buttonToggleCondition.setOnClickListener {
             TogglingConditionRunner.toggle(this)

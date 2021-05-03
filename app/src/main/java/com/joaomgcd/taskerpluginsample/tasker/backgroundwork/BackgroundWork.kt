@@ -45,6 +45,11 @@ class ActivityBackgroundWork : Activity(), CoroutineScope by MainScope() {
             finish()
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        coroutineContext.cancel()
+    }
 }
 
 

@@ -17,7 +17,18 @@
         android:layout_marginTop="16dp"
         android:text="Trigger Conditions in Tasker"
         android:textSize="20sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Trigger Basic Event"
+        android:textSize="16sp" />
 
+    <Button
+        android:id="@+id/buttonTriggerBasicEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Trigger Basic Event" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

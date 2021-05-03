@@ -101,14 +101,20 @@ abstract class TaskerPluginRunnerCondition<TInput : Any, TOutput : Any, TUpdate 
             val packageManager = context.getPackageManager()
             val intent = Intent(TaskerPluginConstants.ACTION_REQUEST_QUERY)
             val resolveInfos = packageManager.queryIntentServices(intent, 0)
-            return resolveInfos.map { resolveInfo ->
+            val result = arrayListOf<String>()
+            resolveInfos.forEach { resolveInfo ->
                 val serviceInfo = resolveInfo.serviceInfo
                 val applicationInfo = serviceInfo.applicationInfo
                 val componentName = ComponentName(serviceInfo.packageName, serviceInfo.name)
                 intentRequest.component = componentName
-                context.startService(intentRequest)
-                applicationInfo.packageName
+                try{
+                    context.startService(intentRequest)
+                    result.add(applicationInfo.packageName)
+                }catch (t:Throwable){
+                    //not successful. Don't add to successes
+                }
             }
+            return result
         }
 
         private fun requestQueryThroughBroadcasts(context: Context, intentRequest: Intent, ignorePackages: List<String>) {
