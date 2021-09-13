@@ -47,6 +47,11 @@ abstract class TaskerPluginRunner<TInput : Any, TOutput : Any> {
         TaskerPluginRunner.startForegroundIfNeeded(this, notificationProperties)
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
+    fun startForegroundIfNeeded(intentServiceParallel: IntentServiceParallel) {
+        TaskerPluginRunner.startForegroundIfNeeded(intentServiceParallel, notificationProperties)
+    }
+
 
     companion object {
         const val NOTIFICATION_CHANNEL_ID = "taskerpluginforegroundd"

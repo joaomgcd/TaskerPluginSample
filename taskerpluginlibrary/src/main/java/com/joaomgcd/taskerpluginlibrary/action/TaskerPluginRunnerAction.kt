@@ -14,7 +14,7 @@ abstract class TaskerPluginRunnerAction<TInput : Any, TOutput : Any>() : TaskerP
     internal fun runWithIntent(context: IntentServiceParallel?, taskerIntent: Intent?) :RunnerActionResult{
         if (context == null) return RunnerActionResult(false)
         if (taskerIntent == null) return RunnerActionResult(false)
-        context.startForegroundIfNeeded()
+        startForegroundIfNeeded(context)
         try {
             val input = taskerIntent.getTaskerInput(context, getInputClass(taskerIntent))
             var result = run(context, input)
