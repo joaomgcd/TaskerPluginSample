@@ -28,12 +28,15 @@ abstract class TaskerPluginRunner<TInput : Any, TOutput : Any> {
                                                            val notificationChannelDescriptionResId: Int = R.string.tasker_plugin_service_description,
                                                            val titleResId: Int = R.string.app_name,
                                                            val textResId: Int = R.string.running_tasker_plugin,
-                                                           val iconResId: Int = R.mipmap.ic_launcher) {
+                                                           val iconResId: Int = R.mipmap.ic_launcher,
+                                                           val notificationChannelId: String = NOTIFICATION_CHANNEL_ID,
+                                                           val notificationBuilderExtender: Notification.Builder.(context: Context) -> Notification.Builder = {this}) {
         @TargetApi(Build.VERSION_CODES.O)
-        fun getNotification(context: Context) = Notification.Builder(context, NOTIFICATION_CHANNEL_ID)
+        fun getNotification(context: Context) = Notification.Builder(context, notificationChannelId)
                 .setContentTitle(context.getString(titleResId))
                 .setContentText(context.getString(textResId))
                 .setSmallIcon(Icon.createWithResource(context, iconResId))
+                .notificationBuilderExtender(context)
                 .build()
     }
 
@@ -54,11 +57,11 @@ abstract class TaskerPluginRunner<TInput : Any, TOutput : Any> {
 
 
     companion object {
-        const val NOTIFICATION_CHANNEL_ID = "taskerpluginforegroundd"
+        private const val NOTIFICATION_CHANNEL_ID = "taskerpluginforegroundd"
         @TargetApi(Build.VERSION_CODES.O)
-        fun Service.createNotificationChannel(channelId: String, notificationProperties: NotificationProperties) {
+        fun Service.createNotificationChannel(notificationProperties: NotificationProperties) {
             val notificationManager = getSystemService(NotificationManager::class.java)
-            val channel = NotificationChannel(channelId, getString(notificationProperties.notificationChannelNameResId), NotificationManager.IMPORTANCE_NONE)
+            val channel = NotificationChannel(notificationProperties.notificationChannelId, getString(notificationProperties.notificationChannelNameResId), NotificationManager.IMPORTANCE_NONE)
             channel.description = getString(notificationProperties.notificationChannelDescriptionResId)
             notificationManager.createNotificationChannel(channel)
         }
@@ -69,8 +72,7 @@ abstract class TaskerPluginRunner<TInput : Any, TOutput : Any> {
         @TargetApi(Build.VERSION_CODES.O)
         fun startForegroundIfNeeded(intentService: Service, notificationProperties: NotificationProperties = NotificationProperties()) {
             if (!intentService.hasToRunServicesInForeground) return
-            val channelId = NOTIFICATION_CHANNEL_ID
-            intentService.createNotificationChannel(channelId, notificationProperties)
+            intentService.createNotificationChannel(notificationProperties)
             val notification: Notification = notificationProperties.getNotification(intentService)
             intentService.startForeground(this.hashCode(), notification)
         }
