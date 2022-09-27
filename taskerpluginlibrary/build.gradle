@@ -13,7 +13,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 3
-        versionName "0.4.0"
+        versionName "0.4.3"
 
 
     }
@@ -35,7 +35,7 @@ repositories {
 }
 ext {
     PUBLISH_GROUP_ID = 'com.joaomgcd'
-    PUBLISH_VERSION = '0.4.2'
+    PUBLISH_VERSION = '0.4.3'
     PUBLISH_ARTIFACT_ID = 'taskerpluginlibrary'
 }
 apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"

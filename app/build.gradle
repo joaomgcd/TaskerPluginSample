@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.joaomgcd.taskerpluginsample"
         minSdkVersion 16
@@ -42,6 +42,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 
-    implementation 'com.joaomgcd:taskerpluginlibrary:0.4.2'
+    implementation 'com.joaomgcd:taskerpluginlibrary:0.4.3'
     //implementation project(':taskerpluginlibrary')
 }
