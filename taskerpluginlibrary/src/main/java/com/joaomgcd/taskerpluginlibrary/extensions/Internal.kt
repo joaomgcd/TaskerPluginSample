@@ -54,7 +54,7 @@ internal inline fun <reified TService : IntentServiceParallel> runFromTasker(con
 }
 
 @TargetApi(Build.VERSION_CODES.O)
-internal fun Context.startServiceDependingOnTargetApi(intent: Intent): ComponentName = if (hasToRunServicesInForeground) {
+internal fun Context.startServiceDependingOnTargetApi(intent: Intent): ComponentName? = if (hasToRunServicesInForeground) {
     startForegroundService(intent)
 } else {
     startService(intent)

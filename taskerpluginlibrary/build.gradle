@@ -13,9 +13,13 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 3
-        versionName "0.4.3"
-
-
+        versionName "0.4.5"
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
     }
 
     compileOptions {
@@ -35,7 +39,17 @@ repositories {
 }
 ext {
     PUBLISH_GROUP_ID = 'com.joaomgcd'
-    PUBLISH_VERSION = '0.4.3'
+    PUBLISH_VERSION = '0.4.5'
     PUBLISH_ARTIFACT_ID = 'taskerpluginlibrary'
 }
 apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"
+
+//to update:
+// - change build variants to release
+// - rebuild so that the the release aar for the plugin is generated from the latest code
+// - Run the "Publish To Maven Central" script
+// - Go to "https://s01.oss.sonatype.org/"
+// - Go to "Staging Repositories"
+// - Press the "Close" button and wait
+// - Press the "Release" button and wait
+// - Check if release is live in "Repositories"
