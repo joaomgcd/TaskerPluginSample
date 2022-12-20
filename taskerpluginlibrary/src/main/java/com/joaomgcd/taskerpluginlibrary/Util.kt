@@ -1,5 +1,7 @@
 package com.joaomgcd.taskerpluginlibrary
 
+import android.content.Context
+
 
 /**
  * Does a different action for a value, depending on its type. Only Tasker supported types are considered
@@ -28,4 +30,25 @@ fun <TResult> getForTaskerCompatibleInputTypes(value: Any?,
         is ArrayList<*> -> forStringArrayList(value as ArrayList<String>)
         else -> throw RuntimeException("Tasker doesn't support inputs of type ${value::class.java}")
     }
+}
+
+fun Context.getStringResourceId(resourceName: String): Int {
+    return resources.getIdentifier(resourceName, "string", packageName)
+}
+
+const val STRING_RES_ID_NOT_SET = -1
+const val STRING_RES_ID_NAME_NOT_SET = ""
+
+fun Context.getStringFromResourceIdOrResourceName(resourceId: Int, resourceName: String, defaultString: String): String {
+    val resourceIdSet = resourceId != STRING_RES_ID_NOT_SET
+    val resourceNameIdSet = resourceName != STRING_RES_ID_NAME_NOT_SET
+    if (!resourceIdSet && !resourceNameIdSet) return defaultString
+
+    val resourceIdFinal = if (resourceNameIdSet) getStringResourceId(resourceName) else resourceId
+    return try {
+        getString(resourceIdFinal)
+    } catch (t: Throwable) {
+        defaultString
+    }
+
 }

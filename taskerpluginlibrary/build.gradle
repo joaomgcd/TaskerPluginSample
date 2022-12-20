@@ -12,8 +12,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 3
-        versionName "0.4.5"
+        versionCode 5
+        versionName "0.4.7"
         consumerProguardFiles 'proguard-rules.pro'
     }
     buildTypes {
@@ -39,7 +39,7 @@ repositories {
 }
 ext {
     PUBLISH_GROUP_ID = 'com.joaomgcd'
-    PUBLISH_VERSION = '0.4.5'
+    PUBLISH_VERSION = '0.4.7'
     PUBLISH_ARTIFACT_ID = 'taskerpluginlibrary'
 }
 apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"

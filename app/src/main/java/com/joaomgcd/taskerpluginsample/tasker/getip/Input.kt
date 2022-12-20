@@ -7,7 +7,7 @@ import com.joaomgcd.taskerpluginsample.R
 
 @TaskerInputRoot
 class GetIPInput @JvmOverloads constructor(
-        @field:TaskerInputField("separator", R.string.separator) var separator: String? = null,
+        @field:TaskerInputField("separator", labelResIdName = "separator") var separator: String? = null,
         //Nested Input example. Notice how GetIPInputOptions also has the @TaskerInputObject annotation.
         @field:TaskerInputObject("optionsip") var options: GetIPInputOptions = GetIPInputOptions()
 )

@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.joaomgcd.taskerpluginlibrary.NoEmptyConstructorException
+import com.joaomgcd.taskerpluginlibrary.STRING_RES_ID_NOT_SET
 import com.joaomgcd.taskerpluginlibrary.extensions.putTaskerCompatibleInput
 import com.joaomgcd.taskerpluginlibrary.extensions.taskerPluginExtraBundle
 import com.joaomgcd.taskerpluginlibrary.extensions.wasConfiguredBefore
 import com.joaomgcd.taskerpluginlibrary.getForTaskerCompatibleInputTypes
+import com.joaomgcd.taskerpluginlibrary.getStringFromResourceIdOrResourceName
 import java.lang.reflect.Field
 
 
@@ -82,11 +84,7 @@ class TaskerInputInfos : ArrayList<TaskerInputInfo>() {
         }
     }
 
-    private fun getString(context: Context, resId: Int) = if (resId == STRING_RES_ID_NOT_SET) {
-        null
-    } else {
-        context.getString(resId)
-    }
+    private fun getString(context: Context, resId: Int, resIdName: String, defaultString:String) = context.getStringFromResourceIdOrResourceName(resId,resIdName,defaultString)
 
     fun addFromInput(context: Context, taskerPluginInput: Any, parentKey: String? = null) {
         val inputClass = taskerPluginInput::class.java
@@ -101,8 +99,8 @@ class TaskerInputInfos : ArrayList<TaskerInputInfo>() {
                     val annotation = method.getAnnotation(TaskerInputField::class.java)
                     var key = annotation.key
                     if (parentKey != null) key = "$parentKey.$key"
-                    val label = getString(context, annotation.labelResId) ?: key
-                    val description = getString(context, annotation.descriptionResId)
+                    val label = getString(context, annotation.labelResId,annotation.labelResIdName,key)
+                    val description = getString(context, annotation.descriptionResId, annotation.descriptionResIdName,"")
                     TaskerInputInfoField(key, label, description, annotation.ignoreInStringBlurb, taskerPluginInput, method)
                 }
         )

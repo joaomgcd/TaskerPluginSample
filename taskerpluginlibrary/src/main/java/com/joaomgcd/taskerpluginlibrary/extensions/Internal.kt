@@ -13,6 +13,7 @@ import com.joaomgcd.taskerpluginlibrary.getForTaskerCompatibleInputTypes
 import com.joaomgcd.taskerpluginlibrary.input.getInputFromTaskerIntent
 import com.joaomgcd.taskerpluginlibrary.runner.IntentServiceParallel
 import com.joaomgcd.taskerpluginlibrary.runner.TaskerPluginRunner
+import java.util.*
 
 
 internal fun <T> ArrayList<T>?.addOrCreate(item: T) = (this ?: ArrayList()).apply { add(item) }
@@ -65,22 +66,34 @@ internal val Context.currentTargetApi
     get() = applicationInfo?.targetSdkVersion ?: Build.VERSION.SDK_INT
 internal val Context.hasToRunServicesInForeground get() = hasToRunServicesInForeground(currentTargetApi)
 internal val ApplicationInfo.hasToRunServicesInForeground get() = hasToRunServicesInForeground(targetSdkVersion)
+
 @TargetApi(Build.VERSION_CODES.O)
 internal fun Context.startServiceDependingOnTargetApi(applicationInfo: ApplicationInfo, intent: Intent) = if (hasToRunServicesInForeground(applicationInfo.targetSdkVersion)) startForegroundService(intent) else startService(intent)
 
 internal fun Bundle.putTaskerCompatibleInput(key: String, value: Any?): Boolean {
     return getForTaskerCompatibleInputTypes(value,
-            { false },
-            { putString(key, it); true },
-            { putInt(key, it); true },
-            { putLong(key, it); true },
-            { putFloat(key, it); true },
-            { putDouble(key, it); true },
-            { putBoolean(key, it); true },
-            { putStringArray(key, it); true },
-            { putStringArrayList(key, it); true }
+        { false },
+        { putString(key, it); true },
+        { putInt(key, it); true },
+        { putLong(key, it); true },
+        { putFloat(key, it); true },
+        { putDouble(key, it); true },
+        { putBoolean(key, it); true },
+        { putStringArray(key, it); true },
+        { putStringArrayList(key, it); true }
     )
 }
 
 
 internal fun IntentService.startForegroundIfNeeded() = TaskerPluginRunner.startForegroundIfNeeded(this)
+val String.withUppercaseFirstLetter
+    get() :String {
+        if (this.isEmpty()) return this
+
+        return substring(0, 1).uppercase() + substring(1)
+    }
+
+val String.splitWordsTitleCase
+    get() = split("_").joinToString(" ") {
+        it.withUppercaseFirstLetter
+    }

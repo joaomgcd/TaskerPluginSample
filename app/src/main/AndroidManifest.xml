@@ -50,6 +50,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".tasker.outputorerror.OutputOrErrorActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Output Or Error">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".tasker.backgroundwork.BackgroundWorkActivity"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
