@@ -1,16 +1,18 @@
 package com.joaomgcd.taskerpluginsample.tasker.gettime
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfig
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfigHelper
 import com.joaomgcd.taskerpluginlibrary.input.TaskerInput
 import com.joaomgcd.taskerpluginlibrary.input.TaskerInputInfo
 import com.joaomgcd.taskerpluginlibrary.input.TaskerInputInfos
 import com.joaomgcd.taskerpluginsample.R
+import com.joaomgcd.taskerpluginsample.databinding.ActivityConfigGettimeBinding
 import com.joaomgcd.taskerpluginsample.selectOne
 import com.joaomgcd.taskerpluginsample.tasker.ActivityConfigTasker
 import com.joaomgcd.taskerpluginsample.toToast
-import kotlinx.android.synthetic.main.activity_config_gettime.*
+
 import java.util.*
 
 /**
@@ -32,30 +34,30 @@ class GetTimeHelper(config: TaskerPluginConfig<GetTimeInput>) : TaskerPluginConf
     }
 }
 
-class ActivityConfigGetTime : ActivityConfigTasker<GetTimeInput, GetTimeOutput, GetTimeRunner, GetTimeHelper>() {
+class ActivityConfigGetTime : ActivityConfigTasker<GetTimeInput, GetTimeOutput, GetTimeRunner, GetTimeHelper,ActivityConfigGettimeBinding>() {
     //Overrides
     override fun getNewHelper(config: TaskerPluginConfig<GetTimeInput>) = GetTimeHelper(config)
 
     override fun assignFromInput(input: TaskerInput<GetTimeInput>) = input.regular.run {
-        editTextFormat.setText(format)
-        times?.let { editTextTimes.setText(it.toString()) }
-        editTextVariable.setText(variableName)
-        checkBoxGetSeconds.isChecked = input.regular.getSeconds
+        binding?.editTextFormat?.setText(format)
+        times?.let { binding?.editTextTimes?.setText(it.toString()) }
+        binding?.editTextVariable?.setText(variableName)
+        binding?.checkBoxGetSeconds?.isChecked = input.regular.getSeconds
     }
 
-    override val inputForTasker get() = TaskerInput(GetTimeInput(editTextFormat.text?.toString(), editTextTimes.text?.toString()?.toIntOrNull(), editTextVariable.text?.toString(), checkBoxGetSeconds.isChecked))
-    override val layoutResId = R.layout.activity_config_gettime
+    override val inputForTasker get() = TaskerInput(GetTimeInput(binding?.editTextFormat?.text?.toString(), binding?.editTextTimes?.text?.toString()?.toIntOrNull(), binding?.editTextVariable?.text?.toString(), binding?.checkBoxGetSeconds?.isChecked?:false))
+    override fun inflateBinding(layoutInflater: LayoutInflater) = ActivityConfigGettimeBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        editTextTimes.setOnClickListener { showVariableDialog() }
+        binding?.editTextTimes?.setOnClickListener { showVariableDialog() }
     }
 
     private fun showVariableDialog() {
         val relevantVariables = taskerHelper.relevantVariables.toList()
         if (relevantVariables.isEmpty()) return "No variables to select.\n\nCreate some local variables in Tasker to show here.".toToast(this)
 
-        selectOne("Select a Tasker variable", relevantVariables) { editTextTimes.setText(it) }
+        selectOne("Select a Tasker variable", relevantVariables) { binding?.editTextTimes?.setText(it) }
 
     }
 }

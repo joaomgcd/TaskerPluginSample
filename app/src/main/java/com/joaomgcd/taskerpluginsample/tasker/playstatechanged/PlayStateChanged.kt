@@ -1,6 +1,7 @@
 package com.joaomgcd.taskerpluginsample.tasker.playstatechanged
 
 import android.content.Context
+import android.view.LayoutInflater
 import com.joaomgcd.taskerpluginlibrary.condition.TaskerPluginRunnerConditionEvent
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfig
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfigHelper
@@ -10,8 +11,8 @@ import com.joaomgcd.taskerpluginlibrary.runner.TaskerPluginResultConditionSatisf
 import com.joaomgcd.taskerpluginlibrary.runner.TaskerPluginResultConditionUnsatisfied
 import com.joaomgcd.taskerpluginsample.R
 import com.joaomgcd.taskerpluginsample.checkedRadioButton
+import com.joaomgcd.taskerpluginsample.databinding.ActivityConfigPlaystateChangedBinding
 import com.joaomgcd.taskerpluginsample.tasker.ActivityConfigTasker
-import kotlinx.android.synthetic.main.activity_config_playstate_changed.*
 
 
 class PlayStateChangedRunner : TaskerPluginRunnerConditionEvent<PlayStateFilter, PlayState, PlayState>() {
@@ -46,16 +47,16 @@ class PlayStateChangedHelper(config: TaskerPluginConfig<PlayStateFilter>) : Task
     }
 }
 
-class PlayStateChangedActivity : ActivityConfigTasker<PlayStateFilter, PlayState, PlayStateChangedRunner, PlayStateChangedHelper>() {
-    val radios by lazy { arrayOf(radioButtonPlaying, radioButtonStopped) }
+class PlayStateChangedActivity : ActivityConfigTasker<PlayStateFilter, PlayState, PlayStateChangedRunner, PlayStateChangedHelper, ActivityConfigPlaystateChangedBinding>() {
+    val radios by lazy { arrayOf(binding?.radioButtonPlaying, binding?.radioButtonStopped) }
     override fun assignFromInput(input: TaskerInput<PlayStateFilter>) {
-        radioButtonPlaying.tag = PlayStateFilter.PLAY_MODE_PLAYING
-        radioButtonStopped.tag = PlayStateFilter.PLAY_MODE_STOPPED
-        input.regular.playMode?.let { playMode -> radios.forEach { it.isChecked = it.tag == playMode } }
+        binding?.radioButtonPlaying?.tag = PlayStateFilter.PLAY_MODE_PLAYING
+        binding?.radioButtonStopped?.tag = PlayStateFilter.PLAY_MODE_STOPPED
+        input.regular.playMode?.let { playMode -> radios.forEach { it?.isChecked = it?.tag == playMode } }
     }
 
-    override val inputForTasker get() = TaskerInput(PlayStateFilter(radioGroupPlayState.checkedRadioButton?.tag as Int?))
-    override val layoutResId = R.layout.activity_config_playstate_changed
+    override val inputForTasker get() = TaskerInput(PlayStateFilter(binding?.radioGroupPlayState?.checkedRadioButton?.tag as Int?))
+    override fun inflateBinding(layoutInflater: LayoutInflater) = ActivityConfigPlaystateChangedBinding.inflate(layoutInflater)
     override fun getNewHelper(config: TaskerPluginConfig<PlayStateFilter>) = PlayStateChangedHelper(config)
 
 }

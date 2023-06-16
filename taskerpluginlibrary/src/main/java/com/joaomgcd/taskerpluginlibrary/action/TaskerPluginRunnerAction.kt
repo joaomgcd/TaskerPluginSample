@@ -7,17 +7,21 @@ import com.joaomgcd.taskerpluginlibrary.extensions.getTaskerInput
 import com.joaomgcd.taskerpluginlibrary.input.TaskerInput
 import com.joaomgcd.taskerpluginlibrary.output.runner.TaskerOutputForRunner
 import com.joaomgcd.taskerpluginlibrary.runner.*
+import net.dinglisch.android.tasker.TaskerPlugin
 
 
 abstract class TaskerPluginRunnerAction<TInput : Any, TOutput : Any>() : TaskerPluginRunner<TInput, TOutput>() {
 
+    private var taskerIntent:Intent? = null
+    protected val requestedTimeout : Int? get() = TaskerPlugin.Setting.getHintTimeoutMS(taskerIntent?.extras).let { if (it == -1) null else it }
     internal fun runWithIntent(context: IntentServiceParallel?, taskerIntent: Intent?) :RunnerActionResult{
         if (context == null) return RunnerActionResult(false)
         if (taskerIntent == null) return RunnerActionResult(false)
         startForegroundIfNeeded(context)
         try {
+            this.taskerIntent = taskerIntent
             val input = taskerIntent.getTaskerInput(context, getInputClass(taskerIntent))
-            var result = run(context, input)
+            val result = run(context, input)
             result.signalFinish(getArgsSignalFinish(context, taskerIntent, input))
         } catch (t: Throwable) {
             TaskerPluginResultError(t).signalFinish(getArgsSignalFinish(context, taskerIntent))

@@ -3,19 +3,24 @@ package com.joaomgcd.taskerpluginsample.tasker
 import android.app.Activity
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.viewbinding.ViewBinding
 import com.joaomgcd.taskerpluginlibrary.SimpleResultError
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfig
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfigHelper
 import com.joaomgcd.taskerpluginlibrary.input.TaskerInput
 import com.joaomgcd.taskerpluginlibrary.runner.TaskerPluginRunner
 import com.joaomgcd.taskerpluginsample.alert
+import com.joaomgcd.taskerpluginsample.databinding.ActivityMainBinding
 
 /**
  * Base class for all the ConfigActivities in this example. This is totally optional. You can use any base class you want as long as it implements TaskerPluginConfig
  */
-abstract class ActivityConfigTasker<TInput : Any, TOutput : Any, TActionRunner : TaskerPluginRunner<TInput, TOutput>, THelper : TaskerPluginConfigHelper<TInput, TOutput, TActionRunner>> : Activity(), TaskerPluginConfig<TInput> {
+abstract class ActivityConfigTasker<TInput : Any, TOutput : Any, TActionRunner : TaskerPluginRunner<TInput, TOutput>, THelper : TaskerPluginConfigHelper<TInput, TOutput, TActionRunner>, TBinding : ViewBinding> : Activity(), TaskerPluginConfig<TInput> {
     abstract fun getNewHelper(config: TaskerPluginConfig<TInput>): THelper
-    abstract val layoutResId: Int
+    protected abstract fun inflateBinding(layoutInflater: LayoutInflater): TBinding?
+
+    protected var binding: TBinding? = null
 
     protected val taskerHelper by lazy { getNewHelper(this) }
 
@@ -23,11 +28,12 @@ abstract class ActivityConfigTasker<TInput : Any, TOutput : Any, TActionRunner :
     override val context get() = applicationContext
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = inflateBinding(layoutInflater)
         if (!isConfigurable) {
             taskerHelper.finishForTasker()
             return
         }
-        setContentView(layoutResId)
+        binding?.root?.let { setContentView(it) }
         taskerHelper.onCreate()
     }
 
@@ -46,11 +52,11 @@ abstract class ActivityConfigTasker<TInput : Any, TOutput : Any, TActionRunner :
 }
 
 
-abstract class ActivityConfigTaskerNoOutput<TInput : Any, TActionRunner : TaskerPluginRunner<TInput, Unit>, THelper : TaskerPluginConfigHelper<TInput, Unit, TActionRunner>> : ActivityConfigTasker<TInput, Unit, TActionRunner, THelper>()
-abstract class ActivityConfigTaskerNoInput<TOutput : Any, TActionRunner : TaskerPluginRunner<Unit, TOutput>, THelper : TaskerPluginConfigHelper<Unit, TOutput, TActionRunner>> : ActivityConfigTasker<Unit, TOutput, TActionRunner, THelper>() {
+abstract class ActivityConfigTaskerNoOutput<TInput : Any, TActionRunner : TaskerPluginRunner<TInput, Unit>, THelper : TaskerPluginConfigHelper<TInput, Unit, TActionRunner>, TBinding : ViewBinding> : ActivityConfigTasker<TInput, Unit, TActionRunner, THelper, TBinding>()
+abstract class ActivityConfigTaskerNoInput<TOutput : Any, TActionRunner : TaskerPluginRunner<Unit, TOutput>, THelper : TaskerPluginConfigHelper<Unit, TOutput, TActionRunner>> : ActivityConfigTasker<Unit, TOutput, TActionRunner, THelper, ViewBinding>() {
     override fun assignFromInput(input: TaskerInput<Unit>) {}
     override val inputForTasker = TaskerInput(Unit)
-    override val layoutResId = 0
+    override fun inflateBinding(layoutInflater: LayoutInflater) = null
     override val isConfigurable = false
 }
 

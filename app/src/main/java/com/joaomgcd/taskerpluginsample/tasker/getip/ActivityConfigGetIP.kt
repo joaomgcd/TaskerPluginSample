@@ -1,13 +1,14 @@
 package com.joaomgcd.taskerpluginsample.tasker.getip
 
+import android.view.LayoutInflater
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfig
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfigHelper
 import com.joaomgcd.taskerpluginlibrary.input.TaskerInput
 import com.joaomgcd.taskerpluginlibrary.output.TaskerOutputForConfig
 import com.joaomgcd.taskerpluginlibrary.output.TaskerOutputsForConfig
 import com.joaomgcd.taskerpluginsample.R
+import com.joaomgcd.taskerpluginsample.databinding.ActivityConfigGetIpBinding
 import com.joaomgcd.taskerpluginsample.tasker.ActivityConfigTasker
-import kotlinx.android.synthetic.main.activity_config_get_ip.*
 
 
 /**
@@ -28,17 +29,16 @@ class GetIPHelper(config: TaskerPluginConfig<GetIPInput>) : TaskerPluginConfigHe
     }
 }
 
-class ActivityConfigGetIP : ActivityConfigTasker<GetIPInput, GetIPOutput, GetIPRunner, GetIPHelper>() {
+class ActivityConfigGetIP : ActivityConfigTasker<GetIPInput, GetIPOutput, GetIPRunner, GetIPHelper, ActivityConfigGetIpBinding>() {
     //Overrides
     override fun getNewHelper(config: TaskerPluginConfig<GetIPInput>) = GetIPHelper(config)
 
     override fun assignFromInput(input: TaskerInput<GetIPInput>) = input.regular.run {
-        editTextSeparator.setText(separator)
-        checkboxSplit.isChecked = options.split
+        binding?.editTextSeparator?.setText(separator)
+        binding?.checkboxSplit?.isChecked = options.split
     }
 
-    override val inputForTasker get() = TaskerInput(GetIPInput(editTextSeparator.text?.toString(), GetIPInputOptions(checkboxSplit.isChecked)))
-    override val layoutResId = R.layout.activity_config_get_ip
-
+    override val inputForTasker get() = TaskerInput(GetIPInput(binding?.editTextSeparator?.text?.toString(), GetIPInputOptions(binding?.checkboxSplit?.isChecked?:false)))
+    override fun inflateBinding(layoutInflater: LayoutInflater) = ActivityConfigGetIpBinding.inflate(layoutInflater)
 
 }

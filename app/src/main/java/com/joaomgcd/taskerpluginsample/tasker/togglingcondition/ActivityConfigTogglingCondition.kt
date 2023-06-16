@@ -1,9 +1,11 @@
 package com.joaomgcd.taskerpluginsample.tasker.togglingcondition
 
+import android.view.LayoutInflater
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfig
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfigHelper
 import com.joaomgcd.taskerpluginlibrary.input.TaskerInput
 import com.joaomgcd.taskerpluginsample.R
+import com.joaomgcd.taskerpluginsample.databinding.ActivityConfigTogglingConditionBinding
 import com.joaomgcd.taskerpluginsample.tasker.ActivityConfigTasker
 
 
@@ -13,13 +15,13 @@ class TogglingConditionHelper(config: TaskerPluginConfig<TogglingConditionInput>
     override val outputClass = TogglingConditionOutput::class.java
 }
 
-class ActivityConfigTogglingCondition : ActivityConfigTasker<TogglingConditionInput, TogglingConditionOutput, TogglingConditionRunner, TogglingConditionHelper>() {
+class ActivityConfigTogglingCondition : ActivityConfigTasker<TogglingConditionInput, TogglingConditionOutput, TogglingConditionRunner, TogglingConditionHelper, ActivityConfigTogglingConditionBinding>() {
 
     override fun assignFromInput(input: TaskerInput<TogglingConditionInput>) {
     }
 
     override fun getNewHelper(config: TaskerPluginConfig<TogglingConditionInput>) = TogglingConditionHelper(config)
     override val inputForTasker = TaskerInput(TogglingConditionInput())
-    override val layoutResId = R.layout.activity_config_toggling_condition
+    override fun inflateBinding(layoutInflater: LayoutInflater) = ActivityConfigTogglingConditionBinding.inflate(layoutInflater)
 
 }
