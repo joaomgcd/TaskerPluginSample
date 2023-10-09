@@ -25,7 +25,7 @@
 }
 -keepclassmembers @com.joaomgcd.taskerpluginlibrary.output.TaskerOutputObject class * { *; }
 -keep public class * extends com.joaomgcd.taskerpluginlibrary.runner.TaskerPluginRunner { *; }
-
+-keepclassmembernames class com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfig { *; }
 
 -keep public class net.dinglisch.android.tasker.PluginResultReceiver { *; }
 
