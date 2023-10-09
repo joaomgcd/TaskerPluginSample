@@ -12,10 +12,10 @@ const val KEY_TIME_CREATED = "timecreated"
 
 @TaskerInputRoot
 class GetTimeInput @JvmOverloads constructor(
-        @field:TaskerInputField("format", R.string.format) var format: String? = null,
-        @field:TaskerInputField("timesInt", R.string.times) var times: Int? = null,
-        @field:TaskerInputField("variableName", R.string.variable, ignoreInStringBlurb = true) var variableName: String? = null,
-        @field:TaskerInputField("getSeconds", R.string.get_seconds) var getSeconds: Boolean = true
+        @field:TaskerInputField("format", labelResIdName = "format") var format: String? = null,
+        @field:TaskerInputField("timesInt",labelResIdName = "times") var times: Int? = null,
+        @field:TaskerInputField("variableName", labelResIdName = "variable", ignoreInStringBlurb = true) var variableName: String? = null,
+        @field:TaskerInputField("getSeconds", labelResIdName = "get_seconds") var getSeconds: Boolean = true
 ) {
     //Your Inputs are normal classes and thus can have their own functions and properties
     fun format(date: Date) = SimpleDateFormat(format).format(date)

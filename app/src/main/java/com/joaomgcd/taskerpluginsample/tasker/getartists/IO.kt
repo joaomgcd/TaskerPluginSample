@@ -11,19 +11,19 @@ import com.joaomgcd.taskerpluginsample.R
 
 @TaskerOutputObject()
 class MusicArtist(
-        @get:TaskerOutputVariable("artist", R.string.artist_label, R.string.artist_html_label) val name: String,
-        val album: MusicAlbum,
-        val songs: Array<MusicSong>
+    @get:TaskerOutputVariable("artist", labelResIdName = "artist_label", htmlLabelResIdName = "artist_html_label") val name: String,
+    val album: MusicAlbum,
+    val songs: Array<MusicSong>
 
 )
 
 @TaskerOutputObject()
 class MusicSong(
-        @get:TaskerOutputVariable("song", R.string.song_label, R.string.song_html_label) val name: String,
-        @get:TaskerOutputVariable("duration", R.string.duration_label, R.string.duration_html_label) val duration: Int
+    @get:TaskerOutputVariable("song", labelResIdName = "song_label", htmlLabelResIdName = "song_html_label") val name: String,
+    @get:TaskerOutputVariable("duration", labelResIdName = "duration_label", htmlLabelResIdName = "duration_html_label") val duration: Int
 )
 
 @TaskerOutputObject()
 class MusicAlbum(
-        @get:TaskerOutputVariable("album", R.string.album_label, R.string.album_html_label) val name: String
+    @get:TaskerOutputVariable("album", labelResIdName = "album_label", htmlLabelResIdName = "album_html_label") val name: String
 )

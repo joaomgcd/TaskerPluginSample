@@ -5,15 +5,13 @@ tasks.withType(Javadoc).all {
     enabled = false
 }
 android {
-    compileSdkVersion 27
+    compileSdk 34
 
 
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 27
-        versionCode 5
-        versionName "0.4.7"
+        targetSdkVersion 34
         consumerProguardFiles 'proguard-rules.pro'
     }
     buildTypes {
@@ -23,9 +21,10 @@ android {
     }
 
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility 17
+        sourceCompatibility 17
     }
+    namespace 'com.joaomgcd.taskerpluginlibrary'
 
 }
 
@@ -39,7 +38,7 @@ repositories {
 }
 ext {
     PUBLISH_GROUP_ID = 'com.joaomgcd'
-    PUBLISH_VERSION = '0.4.7'
+    PUBLISH_VERSION = '0.4.8'
     PUBLISH_ARTIFACT_ID = 'taskerpluginlibrary'
 }
 apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"

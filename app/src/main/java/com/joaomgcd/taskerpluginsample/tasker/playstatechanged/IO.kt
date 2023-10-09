@@ -9,7 +9,7 @@ import com.joaomgcd.taskerpluginsample.R
 
 @TaskerInputRoot
 class PlayStateFilter @JvmOverloads constructor(
-        @field:TaskerInputField(PLAY_MODE_KEY, labelResId = R.string.play_mode) val playMode: Int? = null
+    @field:TaskerInputField(PLAY_MODE_KEY, labelResIdName = "play_mode") val playMode: Int? = null
 ) {
     val isPlaying get() = playMode == PLAY_MODE_PLAYING
     val isStopped get() = playMode == PLAY_MODE_STOPPED
@@ -25,8 +25,8 @@ class PlayStateFilter @JvmOverloads constructor(
 @TaskerInputRoot
 @TaskerOutputObject()
 class PlayState @JvmOverloads constructor(
-        @field:TaskerInputField("playing") @get:TaskerOutputVariable("playing", R.string.playing_label, R.string.playing_html_label) val playing: Boolean? = null,
-        @field:TaskerInputField("artist") @get:TaskerOutputVariable("artist", R.string.artist_label, R.string.artist_html_label) val artist: String? = null,
-        @field:TaskerInputField("songName") @get:TaskerOutputVariable("song", R.string.song_label, R.string.song_html_label) val songName: String? = null
+    @field:TaskerInputField("playing") @get:TaskerOutputVariable("playing", labelResIdName = "playing_label", htmlLabelResIdName = "playing_html_label") val playing: Boolean? = null,
+    @field:TaskerInputField("artist") @get:TaskerOutputVariable("artist", labelResIdName = "artist_label", htmlLabelResIdName = "artist_html_label") val artist: String? = null,
+    @field:TaskerInputField("songName") @get:TaskerOutputVariable("song", labelResIdName = "song_label", htmlLabelResIdName = "song_html_label") val songName: String? = null
 
 )

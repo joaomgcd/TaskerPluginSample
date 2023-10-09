@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.joaomgcd.taskerpluginlibrary">
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <application>
 
         <receiver
@@ -16,7 +17,8 @@
         <service
             android:name=".action.IntentServiceAction"
             android:exported="true"
-            tools:ignore="ExportedService">
+            tools:ignore="ExportedService"
+            android:foregroundServiceType="specialUse" >
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
             </intent-filter>
@@ -24,7 +26,8 @@
         <service
             android:name=".condition.IntentServiceCondition"
             android:exported="true"
-            tools:ignore="ExportedService">
+            tools:ignore="ExportedService"
+            android:foregroundServiceType="specialUse">
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.QUERY_CONDITION" />
             </intent-filter>

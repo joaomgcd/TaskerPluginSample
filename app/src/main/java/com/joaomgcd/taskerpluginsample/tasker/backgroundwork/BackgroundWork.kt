@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION
@@ -40,7 +41,7 @@ class ActivityBackgroundWork : Activity(), CoroutineScope by MainScope() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         launch {
-            val result = InputDialog(this@ActivityBackgroundWork,"Write Something Below").show()
+            val result = InputDialog(this@ActivityBackgroundWork, "Write Something Below").show()
             channelResult.send(result)
             finish()
         }
@@ -53,11 +54,10 @@ class ActivityBackgroundWork : Activity(), CoroutineScope by MainScope() {
 }
 
 
-
 @TaskerOutputObject()
 class BackgroundWorkOutput(
-        @get:TaskerOutputVariable("time_taken", R.string.time_taken, R.string.time_taken_description) var timeTaken: Long?,
-        @get:TaskerOutputVariable("result", R.string.result, R.string.result_description) var result: String?
+    @get:TaskerOutputVariable("time_taken", labelResIdName = "time_taken", htmlLabelResIdName = "time_taken_description") var timeTaken: Long?,
+    @get:TaskerOutputVariable("result", labelResIdName = "result", htmlLabelResIdName = "result_description") var result: String?
 )
 
 class BackgroundWorkRunner : TaskerPluginRunnerActionNoInput<BackgroundWorkOutput>() {
@@ -66,7 +66,9 @@ class BackgroundWorkRunner : TaskerPluginRunnerActionNoInput<BackgroundWorkOutpu
 
         val output = runBlocking {
             val start = System.currentTimeMillis()
-            context.startActivity(Intent(context, ActivityBackgroundWork::class.java))
+            context.startActivity(Intent(context, ActivityBackgroundWork::class.java).apply {
+                flags = FLAG_ACTIVITY_NEW_TASK
+            })
             val result = channelResult.receive()
             val end = System.currentTimeMillis()
             end - start
