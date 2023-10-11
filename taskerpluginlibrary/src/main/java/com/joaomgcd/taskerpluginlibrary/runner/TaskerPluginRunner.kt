@@ -33,17 +33,22 @@ abstract class TaskerPluginRunner<TInput : Any, TOutput : Any> {
                                                            val notificationBuilderExtender: Notification.Builder.(context: Context) -> Notification.Builder = {this}) {
         @TargetApi(Build.VERSION_CODES.O)
         fun getNotification(context: Context) = Notification.Builder(context, notificationChannelId)
-                .setContentTitle(context.getString(titleResId))
-                .setContentText(context.getString(textResId))
+                .setContentTitle(if (titleResId != 0) context.getString(titleResId) else null)
+                .setContentText(if (textResId != 0) context.getString(textResId) else null)
                 .setSmallIcon(Icon.createWithResource(context, iconResId))
                 .notificationBuilderExtender(context)
                 .build()
+
+        companion object {
+            @JvmStatic
+            var DEFAULT: NotificationProperties = NotificationProperties()
+        }
     }
 
     /**
      * Can be overriden so that plugins can present customized foreground notifications when they are executing on Android O or above
      */
-    protected open val notificationProperties get() = NotificationProperties()
+    protected open val notificationProperties get() = NotificationProperties.DEFAULT
 
     @TargetApi(Build.VERSION_CODES.O)
     protected fun IntentService.startForegroundIfNeeded() {
@@ -70,7 +75,7 @@ abstract class TaskerPluginRunner<TInput : Any, TOutput : Any> {
          * Will start an IntentService in the foreground so that the app doesn't crash if it takes more than 5 seconds to execute
          */
         @TargetApi(Build.VERSION_CODES.O)
-        fun startForegroundIfNeeded(intentService: Service, notificationProperties: NotificationProperties = NotificationProperties()) {
+        fun startForegroundIfNeeded(intentService: Service, notificationProperties: NotificationProperties = NotificationProperties.DEFAULT) {
             if (!intentService.hasToRunServicesInForeground) return
             intentService.createNotificationChannel(notificationProperties)
             val notification: Notification = notificationProperties.getNotification(intentService)
