@@ -3,6 +3,7 @@ package com.joaomgcd.taskerpluginlibrary.runner
 import android.app.IntentService
 import android.app.Service
 import android.content.Intent
+import android.os.Binder
 import android.os.Handler
 import android.os.Looper
 import java.util.concurrent.Executors
@@ -22,8 +23,9 @@ abstract class IntentServiceParallel(val name: String) : Service() {
         return Service.START_NOT_STICKY
     }
 
+    private val binder by lazy { Binder() }
     fun startForegroundIfNeeded() = TaskerPluginRunner.startForegroundIfNeeded(this)
-    override fun onBind(intent: Intent) = null
+    override fun onBind(intent: Intent) = binder
     protected abstract fun onHandleIntent(intent: Intent)
 
     /**

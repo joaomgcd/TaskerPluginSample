@@ -19,6 +19,11 @@
             android:exported="true"
             tools:ignore="ExportedService"
             android:foregroundServiceType="specialUse" >
+            <meta-data
+                android:name="canBind"
+                android:value="true" />
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="@string/explanation_for_special_use_action"/>
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
             </intent-filter>
@@ -28,6 +33,8 @@
             android:exported="true"
             tools:ignore="ExportedService"
             android:foregroundServiceType="specialUse">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="@string/explanation_for_special_use_condition"/>
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.QUERY_CONDITION" />
             </intent-filter>

@@ -4,9 +4,11 @@ import android.annotation.TargetApi
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.graphics.drawable.Icon
 import android.os.Build
 import com.joaomgcd.taskerpluginlibrary.R
+import com.joaomgcd.taskerpluginlibrary.extensions.hasToRunForegroundServicesWithType
 import com.joaomgcd.taskerpluginlibrary.extensions.hasToRunServicesInForeground
 import com.joaomgcd.taskerpluginlibrary.extensions.inputClass
 import com.joaomgcd.taskerpluginlibrary.extensions.runnerClass
@@ -24,20 +26,22 @@ abstract class TaskerPluginRunner<TInput : Any, TOutput : Any> {
     /**
      * Notification Properties used to show the foreground notification on Android O or above
      */
-    class NotificationProperties @JvmOverloads constructor(val notificationChannelNameResId: Int = R.string.tasker_plugin_service,
-                                                           val notificationChannelDescriptionResId: Int = R.string.tasker_plugin_service_description,
-                                                           val titleResId: Int = R.string.app_name,
-                                                           val textResId: Int = R.string.running_tasker_plugin,
-                                                           val iconResId: Int = R.mipmap.ic_launcher,
-                                                           val notificationChannelId: String = NOTIFICATION_CHANNEL_ID,
-                                                           val notificationBuilderExtender: Notification.Builder.(context: Context) -> Notification.Builder = {this}) {
+    class NotificationProperties @JvmOverloads constructor(
+        val notificationChannelNameResId: Int = R.string.tasker_plugin_service,
+        val notificationChannelDescriptionResId: Int = R.string.tasker_plugin_service_description,
+        val titleResId: Int = R.string.app_name,
+        val textResId: Int = R.string.running_tasker_plugin,
+        val iconResId: Int = R.mipmap.ic_launcher,
+        val notificationChannelId: String = NOTIFICATION_CHANNEL_ID,
+        val notificationBuilderExtender: Notification.Builder.(context: Context) -> Notification.Builder = { this }
+    ) {
         @TargetApi(Build.VERSION_CODES.O)
         fun getNotification(context: Context) = Notification.Builder(context, notificationChannelId)
-                .setContentTitle(context.getString(titleResId))
-                .setContentText(context.getString(textResId))
-                .setSmallIcon(Icon.createWithResource(context, iconResId))
-                .notificationBuilderExtender(context)
-                .build()
+            .setContentTitle(context.getString(titleResId))
+            .setContentText(context.getString(textResId))
+            .setSmallIcon(Icon.createWithResource(context, iconResId))
+            .notificationBuilderExtender(context)
+            .build()
     }
 
     /**
@@ -58,6 +62,7 @@ abstract class TaskerPluginRunner<TInput : Any, TOutput : Any> {
 
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "taskerpluginforegroundd"
+
         @TargetApi(Build.VERSION_CODES.O)
         fun Service.createNotificationChannel(notificationProperties: NotificationProperties) {
             val notificationManager = getSystemService(NotificationManager::class.java)
@@ -74,7 +79,9 @@ abstract class TaskerPluginRunner<TInput : Any, TOutput : Any> {
             if (!intentService.hasToRunServicesInForeground) return
             intentService.createNotificationChannel(notificationProperties)
             val notification: Notification = notificationProperties.getNotification(intentService)
-            intentService.startForeground(this.hashCode(), notification)
+            if (!intentService.hasToRunForegroundServicesWithType) return intentService.startForeground(this.hashCode(), notification)
+
+            intentService.startForeground(this.hashCode(), notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
         }
 
         /**
@@ -82,7 +89,7 @@ abstract class TaskerPluginRunner<TInput : Any, TOutput : Any> {
          */
         internal inline fun <reified TRunner : TaskerPluginRunner<*, *>> getFromTaskerIntent(taskerIntent: Intent?): TRunner? {
             val runnerClass = taskerIntent?.taskerPluginExtraBundle?.runnerClass
-                    ?: return null
+                ?: return null
 
             val clazz = try {
                 Class.forName(runnerClass)

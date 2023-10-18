@@ -66,6 +66,7 @@ internal val Context.currentTargetApi
     get() = applicationInfo?.targetSdkVersion ?: Build.VERSION.SDK_INT
 internal val Context.hasToRunServicesInForeground get() = hasToRunServicesInForeground(currentTargetApi)
 internal val ApplicationInfo.hasToRunServicesInForeground get() = hasToRunServicesInForeground(targetSdkVersion)
+internal val Context.hasToRunForegroundServicesWithType get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && currentTargetApi >= 34
 
 @TargetApi(Build.VERSION_CODES.O)
 internal fun Context.startServiceDependingOnTargetApi(applicationInfo: ApplicationInfo, intent: Intent) = if (hasToRunServicesInForeground(applicationInfo.targetSdkVersion)) startForegroundService(intent) else startService(intent)
