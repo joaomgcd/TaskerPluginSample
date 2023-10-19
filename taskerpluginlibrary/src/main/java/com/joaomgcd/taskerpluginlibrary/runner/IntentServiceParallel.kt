@@ -24,7 +24,7 @@ abstract class IntentServiceParallel(val name: String) : Service() {
     }
 
     private val binder by lazy { Binder() }
-    fun startForegroundIfNeeded() = TaskerPluginRunner.startForegroundIfNeeded(this)
+    fun startForegroundIfNeeded(mayNeedToStartForeground: Boolean = true) = TaskerPluginRunner.startForegroundIfNeeded(this, mayNeedToStartForeground = mayNeedToStartForeground)
     override fun onBind(intent: Intent) = binder
     protected abstract fun onHandleIntent(intent: Intent)
 
@@ -32,16 +32,19 @@ abstract class IntentServiceParallel(val name: String) : Service() {
      * Use a handler on the main thread to post exceptions and stop the service when all tasks are done
      */
     private val handler = Handler(Looper.getMainLooper())
+
     /**
      * Keep count of how many tasks are active so that we can stop when they reach 0
      */
     private var jobsCount: AtomicInteger = AtomicInteger(0)
+
     /**
      *
      * The executor to run tasks in parallel threads
      *
      */
     private val executor by lazy { Executors.newCachedThreadPool { runnable -> Thread(runnable, "IntentServiceParallel$name") } }
+
     /**
      * Keep track of the last startId sent to the service. Will be used to make sure we only stop the service if the last startId was actually the last startId that the service received.
      */

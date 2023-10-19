@@ -19,4 +19,5 @@ object TaskerPluginConstants {
     const val EXTRA_ACTION_RUNNER_CLASS = "net.dinglisch.android.tasker.extras.ACTION_RUNNER_CLASS"
     const val EXTRA_CONDITION_UPDATE_CLASS = "net.dinglisch.android.tasker.extras.CONDITION_UPDATE_CLASS"
     const val EXTRA_WAS_CONFIGURED_BEFORE = "net.dinglisch.android.tasker.extras.EXTRA_WAS_CONFIGURED_BEFORE"
+    const val EXTRA_CAN_BIND_FIRE_SETTING = "net.dinglisch.android.tasker.EXTRA_CAN_BIND_FIRE_SETTING"
 }

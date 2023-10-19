@@ -73,9 +73,11 @@ abstract class TaskerPluginRunner<TInput : Any, TOutput : Any> {
 
         /**
          * Will start an IntentService in the foreground so that the app doesn't crash if it takes more than 5 seconds to execute
+         * @param mayNeedToStartForeground if false, don't even check if it needs to start in the foreground, otherwise check normally
          */
         @TargetApi(Build.VERSION_CODES.O)
-        fun startForegroundIfNeeded(intentService: Service, notificationProperties: NotificationProperties = NotificationProperties()) {
+        fun startForegroundIfNeeded(intentService: Service, notificationProperties: NotificationProperties = NotificationProperties(), mayNeedToStartForeground: Boolean = true) {
+            if (!mayNeedToStartForeground) return
             if (!intentService.hasToRunServicesInForeground) return
             intentService.createNotificationChannel(notificationProperties)
             val notification: Notification = notificationProperties.getNotification(intentService)

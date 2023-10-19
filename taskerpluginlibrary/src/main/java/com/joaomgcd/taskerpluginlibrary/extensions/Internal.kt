@@ -30,6 +30,13 @@ internal val Intent.taskerPluginExtraBundle: Bundle
 internal var Bundle.wasConfiguredBefore: Boolean
     get() = getBoolean(TaskerPluginConstants.EXTRA_WAS_CONFIGURED_BEFORE, false)
     set(value) = putBoolean(TaskerPluginConstants.EXTRA_WAS_CONFIGURED_BEFORE, value)
+internal var Bundle.canBindFireService: Boolean
+    get() = getBoolean(TaskerPluginConstants.EXTRA_CAN_BIND_FIRE_SETTING, false)
+    set(value) = putBoolean(TaskerPluginConstants.EXTRA_CAN_BIND_FIRE_SETTING, value)
+internal val Bundle.mayNeedToStartForeground get() = !canBindFireService
+internal val Intent.mayNeedToStartForeground get() = extras?.mayNeedToStartForeground ?: false
+
+
 internal var Bundle.runnerClass: String?
     get() = getString(TaskerPluginConstants.EXTRA_ACTION_RUNNER_CLASS, null)
     set(value) = putString(TaskerPluginConstants.EXTRA_ACTION_RUNNER_CLASS, value)
