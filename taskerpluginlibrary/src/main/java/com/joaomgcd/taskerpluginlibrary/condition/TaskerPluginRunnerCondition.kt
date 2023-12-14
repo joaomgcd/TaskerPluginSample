@@ -30,7 +30,8 @@ abstract class TaskerPluginRunnerCondition<TInput : Any, TOutput : Any, TUpdate 
     protected abstract val isEvent: Boolean
     private fun TaskerPluginResultCondition<TOutput>.getConditionResult(hasStartedForeground: Boolean, input: TaskerInput<TInput>? = null): TaskerPluginConditionResult {
         val bundle = if (this is TaskerPluginResultConditionSatisfied<TOutput>) {
-            this.getOutputBundle(getRenames(context, input), { output: TaskerOutputForRunner -> shouldAddOutput(context, input, output) })
+            val resultBundle = this.getOutputBundle(getRenames(context, input)) { output: TaskerOutputForRunner -> shouldAddOutput(context, input, output) }
+            if (resultBundle.isEmpty) null else resultBundle
         } else {
             null
         }
@@ -63,7 +64,7 @@ abstract class TaskerPluginRunnerCondition<TInput : Any, TOutput : Any, TUpdate 
     private fun <TUpdate : Any> getUpdate(context: Context, taskerIntent: Intent): TUpdate? {
         val bundle = TaskerPlugin.Event.retrievePassThroughData(taskerIntent) ?: return null
         val updateClass = bundle.getString(TaskerPluginConstants.EXTRA_CONDITION_UPDATE_CLASS)
-                ?: return null
+            ?: return null
         return try {
             val clazz = Class.forName(updateClass)
             val update = clazz?.newInstance() as TUpdate
@@ -107,10 +108,10 @@ abstract class TaskerPluginRunnerCondition<TInput : Any, TOutput : Any, TUpdate 
                 val applicationInfo = serviceInfo.applicationInfo
                 val componentName = ComponentName(serviceInfo.packageName, serviceInfo.name)
                 intentRequest.component = componentName
-                try{
+                try {
                     context.startService(intentRequest)
                     result.add(applicationInfo.packageName)
-                }catch (t:Throwable){
+                } catch (t: Throwable) {
                     //not successful. Don't add to successes
                 }
             }
